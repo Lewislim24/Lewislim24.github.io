@@ -17,30 +17,37 @@
     </style>
 </head>
 <body>
+    <div id="error-message" style="color: red; text-align: center; padding: 20px;"></div>
+    
     <script>
-        const apiKey = 'GkUpAaauJdST3mFx5vfFXxgIdM8PubX0'; // Replace with your actual Wallhaven API key
+        const apiKey = 'GkUpAaauJdST3mFx5vfFXxgIdM8PubX0'; 
         const apiUrl = 'https://wallhaven.cc/api/v1/search';
         const query = 'anime';
 
         async function setRandomWallpaper() {
             try {
                 const response = await fetch(`${apiUrl}?apikey=${apiKey}&q=${query}&sorting=random`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
                 
                 if (data.data && data.data.length > 0) {
                     const randomIndex = Math.floor(Math.random() * data.data.length);
                     const wallpaperUrl = data.data[randomIndex].path;
                     document.body.style.backgroundImage = `url('${wallpaperUrl}')`;
+                    document.getElementById('error-message').textContent = '';
                 } else {
-                    console.error('No wallpapers found');
+                    throw new Error('No wallpapers found');
                 }
             } catch (error) {
                 console.error('Error fetching wallpaper:', error);
+                document.getElementById('error-message').textContent = `Error: ${error.message}`;
             }
         }
 
         // Set wallpaper on page load
-        setRandomWallpaper();
+        window.addEventListener('load', setRandomWallpaper);
 
         // Optionally, set a new wallpaper every time the page is focused
         document.addEventListener('visibilitychange', () => {
