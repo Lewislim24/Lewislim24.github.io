@@ -32,7 +32,7 @@
                 
                 if (data.data && data.data.length > 0) {
                     for (let i = 0; i < data.data.length; i++) {
-                        const wallpaperUrl = `http://yourusername.pythonanywhere.com/proxy-image?url=${encodeURIComponent(data.data[i].path)}`;
+                        const wallpaperUrl = `http://Lewis24.pythonanywhere.com/proxy-image?url=${encodeURIComponent(data.data[i].path)}`;
                         try {
                             await loadImage(wallpaperUrl);
                             document.body.style.backgroundImage = `url('${wallpaperUrl}')`;
