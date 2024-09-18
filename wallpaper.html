@@ -20,14 +20,11 @@
     <div id="error-message" style="color: red; text-align: center; padding: 20px;"></div>
     
     <script>
-        const apiKey = 'GkUpAaauJdST3mFx5vfFXxgIdM8PubX0'; 
-        const apiUrl = 'https://wallhaven.cc/api/v1/search';
-        const query = 'anime';
-        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        const backendUrl = 'http://Lewis24.pythonanywhere.com/wallpaper';
 
         async function setRandomWallpaper() {
             try {
-                const response = await fetch(`${corsProxy}${apiUrl}?apikey=${apiKey}&q=${query}&sorting=random`);
+                const response = await fetch(backendUrl);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -47,10 +44,8 @@
             }
         }
 
-        // Set wallpaper on page load
         window.addEventListener('load', setRandomWallpaper);
 
-        // Optionally, set a new wallpaper every time the page is focused
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
                 setRandomWallpaper();
