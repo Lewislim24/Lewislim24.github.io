@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <div id="error-message" style="color: red; text-align: center; padding: 20px;"></div>
+    <div id="error-message" style="color: rgb(255, 0, 0); text-align: center; padding: 20px;"></div>
     
     <script>
         const backendUrl = 'https://Lewis24.pythonanywhere.com/wallpaper';
@@ -32,7 +32,7 @@
                 
                 if (data.data && data.data.length > 0) {
                     for (let i = 0; i < data.data.length; i++) {
-                        const wallpaperUrl = data.data[i].path;
+                        const wallpaperUrl = `http://yourusername.pythonanywhere.com/proxy-image?url=${encodeURIComponent(data.data[i].path)}`;
                         try {
                             await loadImage(wallpaperUrl);
                             document.body.style.backgroundImage = `url('${wallpaperUrl}')`;
