@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Wallpaper Background</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const apiKey = 'GkUpAaauJdST3mFx5vfFXxgIdM8PubX0'; // Replace with your actual Wallhaven API key
+        const apiUrl = 'https://wallhaven.cc/api/v1/search';
+        const query = 'anime';
+
+        async function setRandomWallpaper() {
+            try {
+                const response = await fetch(`${apiUrl}?apikey=${apiKey}&q=${query}&sorting=random`);
+                const data = await response.json();
+                
+                if (data.data && data.data.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * data.data.length);
+                    const wallpaperUrl = data.data[randomIndex].path;
+                    document.body.style.backgroundImage = `url('${wallpaperUrl}')`;
+                } else {
+                    console.error('No wallpapers found');
+                }
+            } catch (error) {
+                console.error('Error fetching wallpaper:', error);
+            }
+        }
+
+        // Set wallpaper on page load
+        setRandomWallpaper();
+
+        // Optionally, set a new wallpaper every time the page is focused
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                setRandomWallpaper();
+            }
+        });
+    </script>
+</body>
+</html>
